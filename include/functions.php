@@ -75,7 +75,7 @@ function obfuscate($filename)                   // takes a file_path as input, r
         
         $code   = trim($prettyPrinter->prettyPrintFile($stmts));            //  Use PHP-Parser function to output the obfuscated source, taking the modified obfuscated syntax tree as input
 
-        if (isset($conf->strip_indentation) && $conf->strip_indentation)    // self-explanatory
+        if (!empty($conf->strip_indentation) && $conf->strip_indentation)    // self-explanatory
         {
             $code = remove_whitespaces($code);
         }
@@ -83,12 +83,12 @@ function obfuscate($filename)                   // takes a file_path as input, r
 
         $code  = '<?php'.PHP_EOL;
         $code .= $conf->get_comment();                                          // comment obfuscated source
-        if (isset($conf->extract_comment_from_line) && isset($conf->extract_comment_to_line) )
+        if (!empty($conf->extract_comment_from_line) && !empty($conf->extract_comment_to_line) )
         {
             $t_source = file($filename);
             for($i=$conf->extract_comment_from_line-1;$i<$conf->extract_comment_to_line;++$i) $code .= $t_source[$i];
         }
-        if (isset($conf->user_comment))
+        if (!empty($conf->user_comment))
         {
             $code .= '/*'.PHP_EOL.$conf->user_comment.PHP_EOL.'*/'.PHP_EOL;
         }

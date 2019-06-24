@@ -11,7 +11,7 @@
 //          No warranty of any kind.
 //          Use and abuse at your own risks.
 //========================================================================
-if (isset($_SERVER["SERVER_SOFTWARE"]) && ($_SERVER["SERVER_SOFTWARE"]!="") ){ echo "<h1>Comand Line Interface Only!</h1>"; die; }
+if (!empty($_SERVER["SERVER_SOFTWARE"]) && ($_SERVER["SERVER_SOFTWARE"]!="") ){ echo "<h1>Comand Line Interface Only!</h1>"; die; }
 
 
 const PHP_PARSER_DIRECTORY  = 'PHP-Parser';
@@ -101,8 +101,8 @@ switch($process_mode)
         file_put_contents($target_file,$obfuscated_str);
         exit;
     case 'directory':
-        if (isset($conf->t_skip) && is_array($conf->t_skip)) foreach($conf->t_skip as $key=>$val) $conf->t_skip[$key] = "$source_directory/$val";
-        if (isset($conf->t_keep) && is_array($conf->t_keep)) foreach($conf->t_keep as $key=>$val) $conf->t_keep[$key] = "$source_directory/$val";
+        if (!empty($conf->t_skip) && is_array($conf->t_skip)) foreach($conf->t_skip as $key=>$val) $conf->t_skip[$key] = "$source_directory/$val";
+        if (!empty($conf->t_keep) && is_array($conf->t_keep)) foreach($conf->t_keep as $key=>$val) $conf->t_keep[$key] = "$source_directory/$val";
         obfuscate_directory($source_directory,"$target_directory/yakpro-po/obfuscated");
         exit;
 }
