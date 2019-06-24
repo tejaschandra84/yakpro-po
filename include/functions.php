@@ -223,7 +223,7 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
             exit(-1);
         }
 
-        if (isset($conf->t_skip) && is_array($conf->t_skip) && in_array($source_path,$conf->t_skip))    continue;
+        if (!empty($conf->t_skip) && is_array($conf->t_skip) && in_array($source_path,$conf->t_skip))    continue;
 
         if (is_link($source_path))
         {
@@ -258,7 +258,7 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
                 }
             }
             if (!file_exists($target_path)) mkdir($target_path,0777, true);
-            if (isset($conf->t_keep) && is_array($conf->t_keep) && in_array($source_path,$conf->t_keep))    $new_keep_mode = true;
+            if (!empty($conf->t_keep) && is_array($conf->t_keep) && in_array($source_path,$conf->t_keep))    $new_keep_mode = true;
             obfuscate_directory($source_path,$target_path,$new_keep_mode);
             continue;
         }
@@ -270,7 +270,7 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
             $extension  = pathinfo($source_path,PATHINFO_EXTENSION);
 
             $keep = $keep_mode;
-            if (isset($conf->t_keep) && is_array($conf->t_keep) && in_array($source_path,$conf->t_keep))    $keep = true;
+            if (!empty($conf->t_keep) && is_array($conf->t_keep) && in_array($source_path,$conf->t_keep))    $keep = true;
             if (!in_array($extension,$conf->t_obfuscate_php_extension) )                                    $keep = true;
 
             if ($keep)
@@ -282,7 +282,7 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
                 $obfuscated_str =  obfuscate($source_path);
                 if ($obfuscated_str===null)
                 {
-                    if (isset($conf->abort_on_error))
+                    if (!empty($conf->abort_on_error))
                     {
                         fprintf(STDERR, "Aborting...%s",PHP_EOL);
                         exit;
