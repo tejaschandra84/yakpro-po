@@ -75,7 +75,7 @@ function obfuscate($filename)                   // takes a file_path as input, r
         
         $code   = trim($prettyPrinter->prettyPrintFile($stmts));            //  Use PHP-Parser function to output the obfuscated source, taking the modified obfuscated syntax tree as input
 
-        if (!empty($conf->strip_indentation) && $conf->strip_indentation)    // self-explanatory
+        if (isset($conf->strip_indentation) && $conf->strip_indentation)    // self-explanatory
         {
             $code = remove_whitespaces($code);
         }
@@ -83,12 +83,12 @@ function obfuscate($filename)                   // takes a file_path as input, r
 
         $code  = '<?php'.PHP_EOL;
         $code .= $conf->get_comment();                                          // comment obfuscated source
-        if (!empty($conf->extract_comment_from_line) && !empty($conf->extract_comment_to_line) )
+        if (isset($conf->extract_comment_from_line) && isset($conf->extract_comment_to_line) )
         {
             $t_source = file($filename);
             for($i=$conf->extract_comment_from_line-1;$i<$conf->extract_comment_to_line;++$i) $code .= $t_source[$i];
         }
-        if (!empty($conf->user_comment))
+        if (isset($conf->user_comment))
         {
             $code .= '/*'.PHP_EOL.$conf->user_comment.PHP_EOL.'*/'.PHP_EOL;
         }
@@ -202,6 +202,8 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
 {
     global $conf;
 
+    fprintf(STDERR,"Test %s", $conf->t_keep,PHP_EOL);
+
     if (!$dp = opendir($source_dir))
     {
         fprintf(STDERR,"Error:\t [%s] directory does not exists!%s",$source_dir,PHP_EOL);
@@ -223,7 +225,7 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
             exit(-1);
         }
 
-        if (!empty($conf->t_skip) && is_array($conf->t_skip) && in_array($source_path,$conf->t_skip))    continue;
+        if (isset($conf->t_skip) && is_array($conf->t_skip) && in_array($source_path, $conf->t_skip))    continue;
 
         if (is_link($source_path))
         {
@@ -258,7 +260,7 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
                 }
             }
             if (!file_exists($target_path)) mkdir($target_path,0777, true);
-            if (!empty($conf->t_keep) && is_array($conf->t_keep) && in_array($source_path,$conf->t_keep))    $new_keep_mode = true;
+            if (isset($conf->t_keep) && is_array($conf->t_keep) && in_array($source_path,$conf->t_keep))    $new_keep_mode = true;
             obfuscate_directory($source_path,$target_path,$new_keep_mode);
             continue;
         }
@@ -270,7 +272,7 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
             $extension  = pathinfo($source_path,PATHINFO_EXTENSION);
 
             $keep = $keep_mode;
-            if (!empty($conf->t_keep) && is_array($conf->t_keep) && in_array($source_path,$conf->t_keep))    $keep = true;
+            if (isset($conf->t_keep) && is_array($conf->t_keep) && in_array($source_path,$conf->t_keep))    $keep = true;
             if (!in_array($extension,$conf->t_obfuscate_php_extension) )                                    $keep = true;
 
             if ($keep)
@@ -282,7 +284,7 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
                 $obfuscated_str =  obfuscate($source_path);
                 if ($obfuscated_str===null)
                 {
-                    if (!empty($conf->abort_on_error))
+                    if (isset($conf->abort_on_error))
                     {
                         fprintf(STDERR, "Aborting...%s",PHP_EOL);
                         exit;

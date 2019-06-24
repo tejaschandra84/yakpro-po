@@ -125,7 +125,7 @@ class Config
 
         if ($this->shuffle_stmts_chunk_mode!='ratio') $this->shuffle_stmts_chunk_mode = 'fixed';
         
-        if (!empty( $this->t_ignore_pre_defined_classes))                                                       $this->t_ignore_pre_defined_classes = 'all';
+        if (!isset( $this->t_ignore_pre_defined_classes))                                                       $this->t_ignore_pre_defined_classes = 'all';
         if (!is_array($this->t_ignore_pre_defined_classes) && ( $this->t_ignore_pre_defined_classes != 'none')) $this->t_ignore_pre_defined_classes = 'all';
     }
 }
