@@ -179,7 +179,7 @@ class MyNodeVisitor extends PhpParser\NodeVisitorAbstract       // all parsing a
                     {
                         for($ok=false;;)
                         {
-                            if (!!empty($node->args[0]->value))      break;
+                            if (!empty($node->args[0]->value))      break;
                             if (count($node->args)!=1)              break;
                             $arg = $node->args[0]->value;           if (! ($arg instanceof PhpParser\Node\Scalar\String_) ) { $ok = true; $warning = true; break; }
                             $name = $arg->value;                    if (! is_string($name) || (strlen($name) == 0) )        break;
@@ -437,7 +437,7 @@ class MyNodeVisitor extends PhpParser\NodeVisitorAbstract       // all parsing a
                     {
                         for($ok=false;;)
                         {
-                            if (!!empty($node->args[0]->value))      break;
+                            if (!empty($node->args[0]->value))      break;
                             if (count($node->args)!=2)              break;
                             $arg = $node->args[0]->value;           if (! ($arg instanceof PhpParser\Node\Scalar\String_) ) break;
                             $name = $arg->value;                    if (! is_string($name) || (strlen($name) == 0) )        break;
@@ -811,7 +811,7 @@ class MyNodeVisitor extends PhpParser\NodeVisitorAbstract       // all parsing a
                     }
                     else                                // no else statement found
                     {
-                        if ($condition instanceof PhpParser\Node\Expr\BooleanNot)     // avoid !! in generated code
+                        if ($condition instanceof PhpParser\Node\Expr\BooleanNot)     // avoid ! in generated code
                         {
                             $new_condition      = $condition->expr;
                         }
@@ -864,7 +864,7 @@ class MyNodeVisitor extends PhpParser\NodeVisitorAbstract       // all parsing a
                 $new_node               = array_merge($new_node,$label_loop);
                 if (!empty($condition))
                 {
-                    if ($condition instanceof PhpParser\Node\Expr\BooleanNot)     // avoid !! in generated code
+                    if ($condition instanceof PhpParser\Node\Expr\BooleanNot)     // avoid ! in generated code
                     {
                         $new_condition  = $condition->expr;
                     }
@@ -919,7 +919,7 @@ class MyNodeVisitor extends PhpParser\NodeVisitorAbstract       // all parsing a
                 $goto_break             = array(new PhpParser\Node\Stmt\Goto_($label_loop_break_name));
                 $label_continue         = array(new PhpParser\Node\Stmt\Label($label_loop_continue_name));
                 $goto_continue          = array(new PhpParser\Node\Stmt\Goto_($label_loop_continue_name));
-                if ($condition instanceof PhpParser\Node\Expr\BooleanNot)     // avoid !! in generated code
+                if ($condition instanceof PhpParser\Node\Expr\BooleanNot)     // avoid ! in generated code
                 {
                     $new_condition      = $condition->expr;
                 }

@@ -18,7 +18,7 @@ $yakpro_po_dirname      = $t_yakpro_po_pathinfo['dirname'];
 $config_filename        = '';
 $process_mode           = '';   // can be: 'file' or 'directory'
 
-$pos = array_search('-h',$t_args); if (!!empty($pos) || ($pos===false)) $pos = array_search('--help',$t_args);
+$pos = array_search('-h',$t_args); if (!empty($pos) || ($pos===false)) $pos = array_search('--help',$t_args);
 if (!empty($pos) && ($pos!==false) )
 {
     fprintf(STDERR,"Info:\tyakpro-po version = %s%s",$yakpro_po_version,PHP_EOL.PHP_EOL);
@@ -42,7 +42,7 @@ if ( !empty($pos) && ($pos!==false) && !empty($t_args[$pos+1]) )
     array_splice($t_args,$pos,2);           // remove the 2 args and reorder
 } else $argument_config_filename = '';
 
-$pos = array_search('-o',$t_args); if (!!empty($pos) || ($pos===false)) $pos = array_search('--output-file',$t_args);
+$pos = array_search('-o',$t_args); if (!empty($pos) || ($pos===false)) $pos = array_search('--output-file',$t_args);
 if ( !empty($pos) && ($pos!==false) && !empty($t_args[$pos+1]) )
 {
     $target = $t_args[$pos+1];
@@ -231,7 +231,7 @@ switch(count($t_args))
                         $fp = fopen($target_file,"r");
                         $y = fgets($fp);
                         $y = fgets($fp).fgets($fp).fgets($fp).fgets($fp).fgets($fp);
-                        if (strpos($y,'    |  Obfuscated by YAK Pro - Php Obfuscator ')===false)       // comment is a magic string, used to not overwrite wrong files!!!
+                        if (strpos($y,'    |  Obfuscated by YAK Pro - Php Obfuscator ')===false)       // comment is a magic string, used to not overwrite wrong files!!
                         {
                             $x = realpath($target_file);
                             fprintf(STDERR,"Error:\tTarget file [%s] exists and is not an obfuscated file!%s", ($x!==false) ? $x : $target_file,PHP_EOL);
@@ -260,7 +260,7 @@ switch(count($t_args))
         fprintf(STDERR,"Error:\tSource file [%s] is not readable!%s",($source_file!==false) ? $source_file : $t_args[0],PHP_EOL);
         exit(-1);
     default:
-        fprintf(STDERR,"Error:\tToo much parameters are specified, I do not know how to deal with that!!!%s",PHP_EOL);
+        fprintf(STDERR,"Error:\tToo much parameters are specified, I do not know how to deal with that!!%s",PHP_EOL);
         exit(-1);
 }
 //print_r($t_args);

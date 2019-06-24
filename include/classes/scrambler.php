@@ -373,7 +373,7 @@ class Scrambler
             foreach($this->t_ignore_prefix as $key => $dummy) if (substr($r,0,strlen($key))===$key) return $s;
         }
 
-        if (!!empty($this->t_scramble[$r]))      // if not already scrambled:
+        if (!empty($this->t_scramble[$r]))      // if not already scrambled:
         {
             for($i=0;$i<50;++$i)                // try at max 50 times if the random generated scrambled string has already beeen generated!
             {
@@ -389,7 +389,7 @@ class Scrambler
                 $this->t_rscramble[$y] = $r;
                 break;
             }
-            if (!!empty($this->t_scramble[$r]))
+            if (!empty($this->t_scramble[$r]))
             {
                 fprintf(STDERR,"Scramble Error: Identifier not found after 50 iterations!%sAborting...%s",PHP_EOL,PHP_EOL); // should statistically never occur!
                 exit;
