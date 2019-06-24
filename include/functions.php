@@ -202,8 +202,6 @@ function obfuscate_directory($source_dir,$target_dir,$keep_mode=false)   // self
 {
     global $conf;
 
-    fprintf(STDERR,"Test %s", $conf->t_keep,PHP_EOL);
-
     if (!$dp = opendir($source_dir))
     {
         fprintf(STDERR,"Error:\t [%s] directory does not exists!%s",$source_dir,PHP_EOL);
